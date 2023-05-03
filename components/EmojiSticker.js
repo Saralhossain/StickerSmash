@@ -3,7 +3,7 @@ import {View , Image } from 'react-native';
 export default function EmojiSpicker({imageSize , stickerSource}){
 
         return (
-            <View style ={{top: -250}}>
+            <View style ={{top: -350}}>
                 <Image 
                     source={stickerSource}
                     sizeMode="contain"
