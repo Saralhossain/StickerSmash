@@ -1,3 +1,4 @@
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
@@ -19,20 +20,15 @@ export default function App() {
   const [pickedEmoji, setPickedEmoji] = useState(null);
 
 
-
-  // const setPickedEmojiValue = () => {
-  //       setPickedEmoji( )
-  // }
-
   const pickImageAsync= async() => {
       let result =  await ImagePicker.launchImageLibraryAsync({
         allowsEditing:true,
         quality:1,
       });
       
-      if(!result.cancelled)
+      if(!result.canceled)
       {
-        setSelectedImage(result.uri);
+        setSelectedImage(result.assets[0].uri);
         setShowAppOptions(true);
       }
       else{
@@ -60,7 +56,8 @@ export default function App() {
 
 
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
+    {/* <View style={styles.container}> */}
       <View style={styles.imageContainer}>
         <ImageViewer placeholderImageSource={PlaceholderImage} selectedImage={selectedImage}/>
         {pickedEmoji !==null ? <EmojiSticker imageSize={40} stickerSource={pickedEmoji} /> : null }
@@ -85,7 +82,8 @@ export default function App() {
          <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
       </EmojiPicker>
       <StatusBar style="auto" />
-    </View>
+    {/* </View> */}
+    </GestureHandlerRootView>
   );
 }
 

@@ -14,7 +14,6 @@ export default function EmojiList ({ onSelect , onCloseModal})
 
     const SelectedItem = (data) =>{
         onSelect(data);
-        console.log(data);
     }
 
 
