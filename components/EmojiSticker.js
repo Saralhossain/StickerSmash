@@ -1,7 +1,5 @@
 import {View , Image } from 'react-native';
-// import Animated from 'react-native-reanimated';
 import { TapGestureHandler, PanGestureHandler } from 'react-native-gesture-handler';
-// import {  , TapGestureHandler} from "react-native-gesture-handler";
 
 import Animated, {
   useAnimatedStyle,
@@ -11,8 +9,9 @@ import Animated, {
 } from 'react-native-reanimated';
 
 
-
+//Animated Image replace image to allow to increase size on tap
 const AnimatedImage = Animated.createAnimatedComponent(Image);
+//repositioning stickers
 const AnimatedView = Animated.createAnimatedComponent(View);
 
 export default function EmojiSpicker({imageSize , stickerSource}){
