@@ -14,7 +14,6 @@ import { store } from './Redux/store';
 import { Provider } from 'react-redux';
 
 
-
 //Components
 import ImageViewer from './components/imageViewer';
 import Button from './components/Button';

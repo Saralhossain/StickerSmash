@@ -1,10 +1,15 @@
 import { useState,useEffect,useCallback } from "react";
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar , Button , Modal , Image} from "react-native";
+import { SafeAreaView,  View, FlatList, StyleSheet, Switch, Text, StatusBar , Pressable , Button , Modal , Image} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaLibraryPermissions } from "expo-image-picker";
 import { userData } from "../Redux/userReducer";
 import axios from 'axios';
+import theme from "./Theme";
+import { color } from "react-native-reanimated";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+
+
 
 export default function NetworkCall({navigation})
 {
@@ -14,14 +19,14 @@ export default function NetworkCall({navigation})
     const [users , setUsers] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalData,setModalData]=useState({});
-    const [emoji] = useState([
-      require('../assets/images/emoji1.png'),
-      require('../assets/images/emoji2.png'),
-      require('../assets/images/emoji3.png'),
-      require('../assets/images/emoji4.png'),
-      require('../assets/images/emoji5.png'),
-      require('../assets/images/emoji6.png'),
-  ]);
+    const [isEnabled , setIsEnable] = useState(false);
+
+    const changeToggleState = () => {
+        console.log(isEnabled);
+        setIsEnable(!isEnabled);
+    } 
+    const backgroundColor = isEnabled ? theme.colors.secondary : theme.colors.primary;
+
       
   useFocusEffect(
     useCallback(()=>{
@@ -37,7 +42,6 @@ export default function NetworkCall({navigation})
   )
 
 
-      console.log("Here is my user Data in my NetworkCall : " , usersData);
 
       // // console.log(users); 
       // useEffect(()=>{
@@ -59,17 +63,24 @@ export default function NetworkCall({navigation})
     }
 
       const renderItem = ({ item }) => (
-        <View style={styles.item}>
-            <Text style={styles.userid}>{item.userId}</Text>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.Status}>{item.completed}</Text>
-            <Button style={styles.button} title="Show" onPress={()=>{ShowList(item.userId , item.title , item.completed)}}></Button>
+        <View style={[styles.item , {backgroundColor}]}>
+            <Text style={[styles.userid ]}>{item.userId}</Text>
+            <Text style={[styles.title]}>{item.title}</Text>
+            <Text style={styles.Status}>{item.completed? 0 : 1}</Text>
+            <Pressable style={[styles.button_show] } onPress={()=>{ShowList(item.userId , item.title , item.completed)}}><Text>Show</Text></Pressable>
         </View>
       );
  
   return(
               <View style={styles.container}>
                   <Text style={{left:100}}>Hello wellcome to my ToDo_List</Text>
+                  <Switch
+                        trackColor={{false: '#767577', true: '#81b0ff'}}
+                        thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={changeToggleState}
+                        value={isEnabled}
+                      />
                   <FlatList
                     data={usersData}
                     renderItem={renderItem}
@@ -141,8 +152,11 @@ const styles = StyleSheet.create({
     top:-25,
   },
   Status:{
-    fontSize:10,
-    color:`#fffaf0`,
+    fontSize:15,
+    color:'white',
+    left:60,
+    alignContent:'center',
+    justifyContent: 'center',
   },
   tinyLogo:{
     justifyContent:'center',
@@ -173,4 +187,10 @@ const styles = StyleSheet.create({
     marginTop: 22,
     // justifyContent:"center",
   },
+  button_show:{
+    backgroundColor:'#f8f8ff',
+    color: '#000000',
+    fontWeight: 'bold',
+    fontSize: 10,
+  }
 });

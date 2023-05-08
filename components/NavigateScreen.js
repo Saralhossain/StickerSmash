@@ -8,7 +8,7 @@ export default function NavigateScreen({ route, navigation }){
     console.log(id , title , completed);
 
   return (
-    <View >
+    <View style={{justifyContent:'center' , flex:1}}>
         <Text>WellCome to Details Screen</Text>
             <Text>{id}</Text>
             <Text>{title}</Text>
